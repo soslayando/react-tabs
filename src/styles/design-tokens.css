@@ -1,0 +1,99 @@
+/*
+ * Design tokens — the themeable layer.
+ *
+ * Every value is exposed as a CSS custom property so it lives in the cascade and
+ * can be re-themed at runtime (dark mode, density, per-instance overrides) without
+ * recompiling. SCSS consumes these via aliases in `_tokens.scss`.
+ *
+ * Values are extracted from the Figma "Design System Home Test - Tabs Component".
+ * Values that are NOT defined in the design (motion, disabled, badge min-width)
+ * are flagged inline.
+ */
+
+:root {
+  /* -- Spacing scale (primitives) --------------------------------------- */
+  /* Base-4 scale from Figma. Semantic spacing tokens (gaps, paddings) below
+     reference these instead of hard-coding px values, so the whole system
+     rescales by editing one place. */
+  --spacing-3xs: 2px;
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* -- Typography -------------------------------------------------------- */
+  --font-family:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-weight-bold: 700;
+  --line-height: 1.5;
+  --tab-font-size: 14px; /* Body M */
+  --badge-font-size: 12px; /* Body S */
+
+  /* -- Neutral / structural colors -------------------------------------- */
+  --color-ink: #1b2134; /* selected pill bg, underline indicator, primary text */
+  --color-ink-hover: #343a4e; /* selected pill hover bg */
+  --color-ink-active: #585d71; /* selected pill active bg */
+  --color-on-ink: #ffffff; /* text on selected pill */
+  --color-border: #d3d3dc; /* unselected pill border */
+  --color-border-hover: #c4c5cf; /* unselected pill hover border */
+  --color-surface-hover: #f6f6fa; /* unselected pill hover bg */
+  --color-surface-active: #f1f1f7; /* unselected pill active bg */
+  --color-focus-selected: #1b2134; /* focus ring when the tab is selected */
+  --color-focus-unselected: #000000; /* focus ring when the tab is not selected */
+  --color-underline-indicator: #1b2134;
+
+  /* -- Tab sizing & spacing --------------------------------------------- */
+  --tab-height-md: 50px; /* desktop */
+  --tab-height-sm: 42px; /* mobile */
+  --tab-pill-padding-x: var(--spacing-md);
+  --tab-content-gap: var(--spacing-xs);
+  --tab-pill-radius: 100px;
+  --tab-underline-thickness: 3px;
+  --tab-underline-radius: 100px;
+
+  /* -- Focus ring ------------------------------------------------------- */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-radius-underline: 4px;
+
+  /* -- Tablist gaps (row of tabs) --------------------------------------- */
+  --tablist-gap-pill-md: var(--spacing-sm);
+  --tablist-gap-pill-sm: var(--spacing-xs);
+  --tablist-gap-underline-md: var(--spacing-lg);
+  --tablist-gap-underline-sm: var(--spacing-xl);
+
+  /* -- Badge ------------------------------------------------------------ */
+  --badge-text-color: #1b2134;
+  --badge-neutral-bg: #f1f1f7;
+  --badge-positive-bg: #b1ffc7;
+  --badge-negative-bg: #ffbfb1;
+  --badge-padding-y-md: var(--spacing-2xs);
+  --badge-padding-x-md: var(--spacing-xs);
+  --badge-radius-md: 12px;
+  --badge-padding-y-sm: var(--spacing-3xs);
+  --badge-padding-x-sm: var(--spacing-2xs);
+  --badge-radius-sm: 8px;
+  /* min-width (NOT in Figma) keeps short content (a single char/number) from looking
+     squashed. Derived at runtime with calc() so it stays equal to the badge height
+     (font-size * line-height + vertical padding) even if those tokens are re-themed. */
+  --badge-min-width-md: calc(
+    var(--badge-font-size) *
+    var(--line-height) +
+    var(--badge-padding-y-md) *
+    2
+  );
+  --badge-min-width-sm: calc(
+    var(--badge-font-size) *
+    var(--line-height) +
+    var(--badge-padding-y-sm) *
+    2
+  );
+
+  /* -- Motion (NOT in Figma — tasteful default) ------------------------- */
+  --transition-fast: 150ms ease;
+
+  /* -- Disabled (NOT in Figma — added for design-system completeness) --- */
+  --disabled-opacity: 0.4;
+}

@@ -4,7 +4,6 @@ import { Badge } from "./Badge";
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
   component: Badge,
-  tags: ["autodocs"],
   args: { children: "Badge", variant: "neutral", size: "md" },
   argTypes: {
     variant: { control: "inline-radio", options: ["neutral", "positive", "negative"] },
@@ -36,3 +35,6 @@ export const AllVariants: Story = {
     </div>
   ),
 };
+
+/** Live playground — tweak the controls to update the component in real time. */
+export const Playground: Story = { args: { variant: "neutral", size: "md", children: "Badge" } };

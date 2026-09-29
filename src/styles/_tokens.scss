@@ -1,60 +1,67 @@
-// Design tokens extracted from the Figma "Design System Home Test - Tabs Component".
-// Every raw value below is quoted from the design source (see README for provenance).
-// Values that are NOT defined in the design (motion, disabled) are flagged inline.
+// Design tokens — SCSS authoring layer.
+//
+// The values live as CSS custom properties in `design-tokens.css` (the themeable layer).
+// This file only aliases them to SCSS variables so component styles stay terse
+// (`color: $color-ink;`) while emitting `var(--color-ink)` — keeping everything
+// runtime-themeable. No raw values here: this is a pure indirection layer.
 
 // -- Typography -------------------------------------------------------------
-$font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-  sans-serif;
-$font-weight-bold: 700;
-$line-height: 1.5;
-$tab-font-size: 14px; // Body M
-$badge-font-size: 12px; // Body S
+$font-family: var(--font-family);
+$font-weight-bold: var(--font-weight-bold);
+$line-height: var(--line-height);
+$tab-font-size: var(--tab-font-size);
+$badge-font-size: var(--badge-font-size);
 
 // -- Neutral / structural colors -------------------------------------------
-$color-ink: #1b2134; // selected pill bg, underline indicator, primary text
-$color-ink-hover: #343a4e; // selected pill hover bg
-$color-ink-active: #585d71; // selected pill active bg
-$color-on-ink: #ffffff; // text on selected pill
-$color-border: #d3d3dc; // unselected pill border
-$color-border-hover: #c4c5cf; // unselected pill hover border
-$color-surface-hover: #f6f6fa; // unselected pill hover bg
-$color-surface-active: #f1f1f7; // unselected pill active bg
-$color-focus-selected: #1b2134; // focus ring when the tab is selected
-$color-focus-unselected: #000000; // focus ring when the tab is not selected
-$color-underline-indicator: #1b2134;
+$color-ink: var(--color-ink);
+$color-ink-hover: var(--color-ink-hover);
+$color-ink-active: var(--color-ink-active);
+$color-on-ink: var(--color-on-ink);
+$color-border: var(--color-border);
+$color-border-hover: var(--color-border-hover);
+$color-surface-hover: var(--color-surface-hover);
+$color-surface-active: var(--color-surface-active);
+$color-focus-selected: var(--color-focus-selected);
+$color-focus-unselected: var(--color-focus-unselected);
+$color-underline-indicator: var(--color-underline-indicator);
 
 // -- Tab sizing & spacing ---------------------------------------------------
-$tab-height-md: 50px; // desktop
-$tab-height-sm: 42px; // mobile
-$tab-pill-padding-x: 16px;
-$tab-content-gap: 8px;
-$tab-pill-radius: 100px;
-$tab-underline-thickness: 3px;
-$tab-underline-radius: 100px;
+$tab-height-md: var(--tab-height-md);
+$tab-height-sm: var(--tab-height-sm);
+$tab-pill-padding-x: var(--tab-pill-padding-x);
+$tab-content-gap: var(--tab-content-gap);
+$tab-pill-radius: var(--tab-pill-radius);
+$tab-underline-thickness: var(--tab-underline-thickness);
+$tab-underline-radius: var(--tab-underline-radius);
 
 // -- Focus ring -------------------------------------------------------------
-$focus-ring-width: 2px;
-$focus-ring-offset: 2px;
-$focus-ring-radius-underline: 4px;
+$focus-ring-width: var(--focus-ring-width);
+$focus-ring-offset: var(--focus-ring-offset);
+$focus-ring-radius-underline: var(--focus-ring-radius-underline);
 
 // -- Tablist gaps (row of tabs) --------------------------------------------
-$tablist-gap-pill-md: 12px;
-$tablist-gap-pill-sm: 8px;
-$tablist-gap-underline-md: 24px;
-$tablist-gap-underline-sm: 32px;
+$tablist-gap-pill-md: var(--tablist-gap-pill-md);
+$tablist-gap-pill-sm: var(--tablist-gap-pill-sm);
+$tablist-gap-underline-md: var(--tablist-gap-underline-md);
+$tablist-gap-underline-sm: var(--tablist-gap-underline-sm);
 
 // -- Badge ------------------------------------------------------------------
-$badge-text-color: #1b2134;
-$badge-neutral-bg: #f1f1f7;
-$badge-positive-bg: #b1ffc7;
-$badge-negative-bg: #ffbfb1;
-$badge-padding-md: 4px 8px;
-$badge-radius-md: 12px;
-$badge-padding-sm: 2px 4px;
-$badge-radius-sm: 8px;
+$badge-text-color: var(--badge-text-color);
+$badge-neutral-bg: var(--badge-neutral-bg);
+$badge-positive-bg: var(--badge-positive-bg);
+$badge-negative-bg: var(--badge-negative-bg);
+$badge-padding-y-md: var(--badge-padding-y-md);
+$badge-padding-x-md: var(--badge-padding-x-md);
+$badge-radius-md: var(--badge-radius-md);
+$badge-padding-y-sm: var(--badge-padding-y-sm);
+$badge-padding-x-sm: var(--badge-padding-x-sm);
+$badge-radius-sm: var(--badge-radius-sm);
+// Derived at runtime via calc() in tokens.css (see the note there).
+$badge-min-width-md: var(--badge-min-width-md);
+$badge-min-width-sm: var(--badge-min-width-sm);
 
 // -- Motion (NOT in Figma — tasteful default) -------------------------------
-$transition-fast: 150ms ease;
+$transition-fast: var(--transition-fast);
 
 // -- Disabled (NOT in Figma — added for design-system completeness) ---------
-$disabled-opacity: 0.4;
+$disabled-opacity: var(--disabled-opacity);

@@ -1,0 +1,98 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as BadgeStories from "./Badge.stories";
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+A small, non-interactive chip for a short status or count. In this design system
+it is most often placed inside a `Tabs.Tab` via the tab's `badge` prop, but it
+stands on its own too.
+
+<Canvas of={BadgeStories.AllVariants} />
+
+## When to use
+
+- **Use** a badge to surface a count (unread items, results) or a short status
+  label (_New_, _Draft_) attached to another element.
+- **Avoid** long text — a badge is meant for one or two words / a number.
+- A badge is **decorative/informational and non-interactive**: it renders a
+  `<span>`, never a button or link.
+
+## Playground
+
+Tweak the controls below and the component updates in real time.
+
+<Canvas of={BadgeStories.Playground} />
+
+<Controls of={BadgeStories.Playground} />
+
+## Variants
+
+The `variant` prop maps to the design's background colours. Text colour stays
+constant for contrast.
+
+### Neutral
+
+<Canvas of={BadgeStories.Neutral} />
+
+### Positive
+
+<Canvas of={BadgeStories.Positive} />
+
+### Negative
+
+<Canvas of={BadgeStories.Negative} />
+
+## Sizes
+
+`size="md"` pairs with desktop tabs, `size="sm"` with mobile tabs. When a badge
+is passed to a `Tabs.Tab`, match the badge `size` to the tabs `size`.
+
+```tsx
+<Tabs size="sm">
+  <Tabs.List aria-label="Sections">
+    <Tabs.Tab id="activity" badge={<Badge size="sm" variant="positive">3</Badge>}>
+      Activity
+    </Tabs.Tab>
+  </Tabs.List>
+</Tabs>
+```
+
+> **Why a `size` scale and not a `mobile` boolean?** Figma models the size as a
+> `mobile` on/off property, but a boolean only allows two states and couples the
+> _device_ to the _visual outcome_. A `size` enum (`md` / `sm`) is extensible,
+> describes what actually changes, and stays consistent with `Tabs`' own `size`
+> for a coherent, learnable API. Mapping: Figma `mobile = on` ↔ `size="sm"`.
+
+## Props
+
+<ArgTypes of={BadgeStories} />
+
+## Accessibility
+
+- The badge is purely presentational; it does not receive focus.
+- If the badge conveys meaning that isn't obvious from context (e.g. a bare
+  number), give the surrounding control an accessible label so screen-reader
+  users get the full picture.
+
+## Design fidelity
+
+All colours, sizes, spacing and typography come from the Figma file and live as
+CSS custom properties in
+[`src/styles/design-tokens.css`](https://github.com/soslayando/react-tabs/blob/main/src/styles/design-tokens.css).
+
+One rule is intentionally **not** from the design and is flagged in code: a
+`min-width` equal to the badge height. Without it, short content (a single digit
+or `!`) renders taller than it is wide and looks squashed. The value is not a
+magic number — it is **derived at runtime with `calc()`** from the primitive
+tokens, so it stays equal to the height even if those tokens are re-themed:
+
+```css
+--badge-min-width-md: calc(
+  var(--badge-font-size) * var(--line-height) + var(--badge-padding-y-md) * 2
+); /* = 26px */
+--badge-min-width-sm: calc(
+  var(--badge-font-size) * var(--line-height) + var(--badge-padding-y-sm) * 2
+); /* = 22px */
+```

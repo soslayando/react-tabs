@@ -6,7 +6,7 @@ import { Tabs } from "./Tabs";
 const meta: Meta<typeof Tabs> = {
   title: "Components/Tabs",
   component: Tabs,
-  tags: ["autodocs"],
+  subcomponents: { "Tabs.List": Tabs.List, "Tabs.Tab": Tabs.Tab, "Tabs.Panel": Tabs.Panel },
   args: { variant: "pill", size: "md", defaultActiveId: "overview" },
   argTypes: {
     variant: { control: "inline-radio", options: ["pill", "underline"] },
@@ -95,3 +95,6 @@ export const Controlled: Story = {
   },
   args: { variant: "pill", size: "md" },
 };
+
+/** Live playground — tweak the controls to update the component in real time. */
+export const Playground: Story = { render: Demo, args: { variant: "pill", size: "md" } };

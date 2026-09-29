@@ -1,0 +1,157 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as TabsStories from "./Tabs.stories";
+
+<Meta of={TabsStories} />
+
+# Tabs
+
+An accessible, reusable set of tabs that lets users switch between related views
+while only one panel is visible at a time. Built as a **compound component** so
+the markup reads like the UI it produces, with the active-tab state and full
+keyboard support handled for you.
+
+<Canvas of={TabsStories.Pill} />
+
+## When to use
+
+- **Use** tabs to organise related content into peer sections within the same
+  context, where the user only needs one section at a time (e.g. _Overview_,
+  _Activity_, _Reports_).
+- **Avoid** tabs for sequential steps (use a stepper/wizard) or for navigating
+  between unrelated pages (use links/navigation).
+
+## Playground
+
+Tweak the controls below and the component updates in real time.
+
+<Canvas of={TabsStories.Playground} />
+
+<Controls of={TabsStories.Playground} />
+
+## Anatomy
+
+Tabs is assembled from four parts. Each `Tabs.Tab` is linked to its
+`Tabs.Panel` through a shared `id` / `tabId`.
+
+```tsx
+<Tabs defaultActiveId="overview" variant="pill" size="md">
+  <Tabs.List aria-label="Account sections">
+    <Tabs.Tab id="overview">Overview</Tabs.Tab>
+    <Tabs.Tab id="activity" badge={<Badge variant="positive">3</Badge>}>
+      Activity
+    </Tabs.Tab>
+  </Tabs.List>
+
+  <Tabs.Panel tabId="overview">Overview content</Tabs.Panel>
+  <Tabs.Panel tabId="activity">Activity content</Tabs.Panel>
+</Tabs>
+```
+
+| Part          | Role          | Responsibility                                            |
+| ------------- | ------------- | -------------------------------------------------------- |
+| `Tabs`        | `<div>`       | Owns the active-tab state and shares it via context      |
+| `Tabs.List`   | `tablist`     | Groups the triggers and handles arrow-key navigation     |
+| `Tabs.Tab`    | `tab`         | A trigger; accepts an optional `badge`                    |
+| `Tabs.Panel`  | `tabpanel`    | The content shown for the matching tab                   |
+
+## Variants
+
+Two visual styles, driven by the `variant` prop. Both come straight from the
+Figma design.
+
+### Pill
+
+<Canvas of={TabsStories.Pill} />
+
+### Underline
+
+<Canvas of={TabsStories.Underline} />
+
+## Sizes
+
+`size="md"` matches the desktop design; `size="sm"` matches mobile. The size
+cascades to any `Badge` you place inside a tab.
+
+<Canvas of={TabsStories.Mobile} />
+
+> **Why a `size` scale and not a `mobile` boolean?** Figma models this as a
+> `mobile` on/off property, but the component exposes it as a `size` enum
+> (`md` / `sm`). A boolean only allows two states and couples the _device_ to the
+> _visual outcome_; a `size` scale is extensible (`lg`, `xs` later), describes
+> what actually changes, keeps illegal states unrepresentable, and mirrors
+> `Badge`'s `size` for a consistent, learnable API. The mapping is direct —
+> Figma `mobile = on` ↔ `size="sm"`, `mobile = off` ↔ `size="md"` — so design
+> parity is preserved (e.g. via Figma Code Connect).
+
+## With a Badge
+
+Any tab accepts a `badge` node through its API — typically a `<Badge>` to show a
+count or status next to the label. This satisfies the design-system acceptance
+criteria (add a badge to a tab, and choose its variant).
+
+<Canvas of={TabsStories.WithBadges} />
+
+## Controlled vs. uncontrolled
+
+- **Uncontrolled** (default): pass `defaultActiveId` (or nothing — it falls back
+  to the first enabled tab) and let `Tabs` manage its own state.
+- **Controlled**: pass `activeId` together with `onActiveChange` to own the state
+  yourself. Useful to sync the active tab with the URL or external state.
+
+<Canvas of={TabsStories.Controlled} />
+
+## Accessibility
+
+Implements the [WAI-ARIA Tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
+
+- Roles and relations are wired automatically: `tablist` / `tab` / `tabpanel`
+  with `aria-selected`, `aria-controls` and `aria-labelledby` linked via stable ids.
+- **Roving tabindex**: only the active tab is in the page tab order; the rest are
+  reached with the arrow keys.
+- **Automatic activation**: moving focus with the keyboard also activates the tab.
+- Disabled tabs are skipped by keyboard navigation and are not focusable.
+- Focus is shown with `:focus-visible` only (keyboard users), matching the design.
+
+### Keyboard support
+
+| Key                | Action                                          |
+| ------------------ | ----------------------------------------------- |
+| `Tab`              | Move focus into / out of the tablist            |
+| `Arrow Right`      | Focus & activate the next tab (wraps around)    |
+| `Arrow Left`       | Focus & activate the previous tab (wraps around)|
+| `Home`             | Focus & activate the first tab                  |
+| `End`              | Focus & activate the last tab                   |
+
+## Props
+
+Root `Tabs` props (plus any standard `<div>` attributes):
+
+<ArgTypes of={TabsStories} />
+
+### `Tabs.Tab`
+
+| Prop       | Type              | Default | Description                                        |
+| ---------- | ----------------- | ------- | -------------------------------------------------- |
+| `id`       | `string`          | —       | Unique id; links the tab to its `Tabs.Panel`       |
+| `badge`    | `React.ReactNode` | —       | Optional node after the label (usually a `Badge`)  |
+| `disabled` | `boolean`         | `false` | Disables and removes the tab from keyboard nav     |
+
+### `Tabs.Panel`
+
+| Prop    | Type     | Default | Description                                      |
+| ------- | -------- | ------- | ------------------------------------------------ |
+| `tabId` | `string` | —       | Id of the tab this panel belongs to              |
+
+### `Tabs.List`
+
+| Prop         | Type     | Default | Description                                          |
+| ------------ | -------- | ------- | ---------------------------------------------------- |
+| `aria-label` | `string` | —       | Accessible name for the tablist (or `aria-labelledby`) |
+
+## Design fidelity
+
+All colours, sizes, spacing and typography come from the Figma file and live in
+[`src/styles/design-tokens.css`](https://github.com/soslayando/react-tabs/blob/main/src/styles/design-tokens.css).
+Two things are intentionally **not** from the design and are flagged in code:
+transition timing (a tasteful default) and the `disabled` state (added for
+design-system completeness — the design has no disabled tab).

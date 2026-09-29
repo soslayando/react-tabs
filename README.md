@@ -114,7 +114,9 @@ src/
       helpers.ts      id builders + first-enabled-tab lookup
       hooks/          useTabsKeyboard (arrow/home/end)
       components/     Tab · TabList · TabPanel
-  styles/_tokens.scss design tokens from Figma
+  styles/
+    design-tokens.css themeable tokens as CSS custom properties (from Figma)
+    _tokens.scss      SCSS aliases → var(--*) + calc() derivations
   utils/cx.ts         className joiner
 ```
 
@@ -123,6 +125,15 @@ src/
 - **SCSS Modules instead of a CSS framework.** The brief forbids CSS frameworks
   and asks for CSS written from scratch; `sass` ships in the base repo. Variants
   are driven by `data-*` attributes styled with attribute selectors.
+- **Two-layer tokens.** Values live as CSS custom properties in `design-tokens.css`
+  (runtime-themeable — dark mode, density, per-instance overrides need no rebuild);
+  `_tokens.scss` only aliases them to SCSS variables so component styles stay terse
+  while emitting `var(--*)`. Derived values (e.g. the badge `min-width`) use `calc()`
+  so they recompute at runtime when a token is re-themed.
+- **Primitive → semantic spacing.** A base t-shirt scale (`--spacing-3xs` … `--spacing-xl`,
+  base-4 from Figma) is the single source; the semantic gap/padding tokens
+  (`--tab-content-gap`, `--tablist-gap-*`, `--badge-padding-*`) reference it, so the
+  whole layout rescales from one place.
 - **Self-contained state and a11y.** `Tabs` owns the active state, ships integrated
   keyboard navigation, and renders real `tabpanel`s for full accessibility — the
   consumer only declares the structure.
@@ -131,7 +142,7 @@ src/
 ## Design fidelity
 
 All colors, sizes, spacing and typography come from the Figma file; see
-[`src/styles/_tokens.scss`](src/styles/_tokens.scss) for the annotated values.
+[`src/styles/design-tokens.css`](src/styles/design-tokens.css) for the annotated values.
 Two things are intentionally **not** from the design and are flagged in code:
 transition timing (a tasteful default) and the `disabled` state (added for
 design-system completeness — the design has no disabled tab).

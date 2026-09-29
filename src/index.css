@@ -1,3 +1,5 @@
+@import "./styles/design-tokens.css";
+
 :root {
   --background: #ffffff;
   --content: #1b2134;

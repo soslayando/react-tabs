@@ -13,12 +13,14 @@
   white-space: nowrap;
 
   &[data-size="md"] {
-    padding: $badge-padding-md;
+    min-width: $badge-min-width-md;
+    padding: $badge-padding-y-md $badge-padding-x-md;
     border-radius: $badge-radius-md;
   }
 
   &[data-size="sm"] {
-    padding: $badge-padding-sm;
+    min-width: $badge-min-width-sm;
+    padding: $badge-padding-y-sm $badge-padding-x-sm;
     border-radius: $badge-radius-sm;
   }
 
