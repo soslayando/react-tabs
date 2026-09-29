@@ -1,0 +1,42 @@
+@use "../../styles/tokens" as *;
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tablist {
+  display: flex;
+  align-items: center;
+
+  &[data-variant="pill"] {
+    &[data-size="md"] {
+      gap: $tablist-gap-pill-md;
+    }
+
+    &[data-size="sm"] {
+      gap: $tablist-gap-pill-sm;
+    }
+  }
+
+  &[data-variant="underline"] {
+    &[data-size="md"] {
+      gap: $tablist-gap-underline-md;
+    }
+
+    &[data-size="sm"] {
+      gap: $tablist-gap-underline-sm;
+    }
+  }
+}
+
+.panel {
+  font-family: $font-family;
+
+  &:focus-visible {
+    outline: $focus-ring-width solid $color-focus-unselected;
+    outline-offset: $focus-ring-offset;
+    border-radius: $focus-ring-radius-underline;
+  }
+}
