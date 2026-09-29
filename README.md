@@ -2,7 +2,8 @@
 
 An accessible, reusable **Tabs** component (with a **Badge** subcomponent) built as
 a design-system building block. React + TypeScript, styling in SCSS Modules written
-from scratch, showcased in Storybook.
+from scratch. Each component ships a rich **Storybook Docs page** (MDX) with usage
+guidance, an accessibility reference, design-decision notes and a live playground.
 
 ## Install and run
 
@@ -106,7 +107,7 @@ assembled with the `Internal* as typeof Internal* & { ... }` cast plus per-part
 ```
 src/
   components/
-    Badge/            Badge.tsx · Badge.module.scss · declarations.ts · stories · test
+    Badge/            Badge.tsx · Badge.module.scss · declarations.ts · stories · docs (mdx) · test
     Tabs/
       Tabs.tsx        compound root, controlled/uncontrolled state
       context.ts      shared state + presentation
@@ -114,6 +115,7 @@ src/
       helpers.ts      id builders + first-enabled-tab lookup
       hooks/          useTabsKeyboard (arrow/home/end)
       components/     Tab · TabList · TabPanel
+      Tabs.stories.tsx / Tabs.mdx  stories + rich Docs page
   styles/
     design-tokens.css themeable tokens as CSS custom properties (from Figma)
     _tokens.scss      SCSS aliases → var(--*) + calc() derivations
@@ -143,6 +145,7 @@ src/
 
 All colors, sizes, spacing and typography come from the Figma file; see
 [`src/styles/design-tokens.css`](src/styles/design-tokens.css) for the annotated values.
-Two things are intentionally **not** from the design and are flagged in code:
-transition timing (a tasteful default) and the `disabled` state (added for
-design-system completeness — the design has no disabled tab).
+Three things are intentionally **not** from the design and are flagged in code:
+transition timing (a tasteful default), the `disabled` state (added for
+design-system completeness — the design has no disabled tab), and the badge
+`min-width` (keeps short content from looking squashed; derived from the tokens).
