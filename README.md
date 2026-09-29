@@ -97,11 +97,11 @@ Implements the [WAI-ARIA Tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/
 
 ## Architecture
 
-The folder layout and idioms mirror the [genesys-ui](https://github.com/genesys-ui/react)
-component style: a folder per component with an `index.ts` barrel, `declarations.ts`
-(`I*` interfaces + `T*` unions), `helpers.ts`, `context.ts`, `hooks/` and nested
-`components/`; compound components assembled with the
-`Internal* as typeof Internal* & { ... }` cast plus per-part `displayName`.
+The folder layout follows a consistent component style: a folder per component
+with an `index.ts` barrel, `declarations.ts` (`I*` interfaces + `T*` unions),
+`helpers.ts`, `context.ts`, `hooks/` and nested `components/`; compound components
+assembled with the `Internal* as typeof Internal* & { ... }` cast plus per-part
+`displayName`.
 
 ```
 src/
@@ -118,16 +118,15 @@ src/
   utils/cx.ts         className joiner
 ```
 
-### Notable choices (and where this differs from genesys-ui)
+### Notable choices
 
-- **SCSS Modules instead of styled-components.** The brief forbids CSS frameworks
+- **SCSS Modules instead of a CSS framework.** The brief forbids CSS frameworks
   and asks for CSS written from scratch; `sass` ships in the base repo. Variants
-  are driven by `data-*` attributes styled with attribute selectors — the CSS-in-JS
-  analog of genesys's transient `$props`.
-- **More complete than the reference.** genesys ships tabs only and leaves active
-  state and keyboard nav to the consumer. Here `Tabs` owns the state, ships
-  integrated keyboard navigation, and renders real `tabpanel`s for full a11y.
-- **Standard roving tabindex** (active tab = `0`) rather than genesys's inverted one.
+  are driven by `data-*` attributes styled with attribute selectors.
+- **Self-contained state and a11y.** `Tabs` owns the active state, ships integrated
+  keyboard navigation, and renders real `tabpanel`s for full accessibility — the
+  consumer only declares the structure.
+- **Standard roving tabindex** (active tab = `0`).
 
 ## Design fidelity
 
